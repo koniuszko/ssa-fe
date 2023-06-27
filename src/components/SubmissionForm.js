@@ -1,5 +1,7 @@
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import axios from "axios";
+import * as Yup from "yup";
+import ErrorText from "./ErrorText";
 
 export default function SubmissionForm() {
 
@@ -7,7 +9,22 @@ export default function SubmissionForm() {
         axios.post('http://localhost:3030/streamers', values)
             .then(res => console.log(res))
             .catch(err => console.log(err));
+        window.location.replace('/');
     }
+
+    const submissionFormSchema = Yup.object().shape({
+        name: Yup.string()
+            .min(3, 'Name is too Short!')
+            .max(20, 'Name is too Long!')
+            .required('Name required'),
+        description: Yup.string()
+            .min(10, 'Description is too Short!')
+            .max(500, 'Description is too Long!')
+            .required('Description required'),
+        platform: Yup.string()
+            .oneOf(['Twitch', 'YouTube', 'TikTok', 'Kick', 'Rumble'], 'Please select a platform')
+            .required('Required'),
+    });
 
     return (
         <div>
@@ -17,36 +34,47 @@ export default function SubmissionForm() {
                     description: '',
                     platform: 'none'
                 }}
-
+                validationSchema={submissionFormSchema}
                 onSubmit={(values, {setSubmitting}) => {
                     submitForm(values)
                     setSubmitting(false);
                 }}
             >
-                <Form>
-                    <div>
-                        <label htmlFor="name">Streamer Name</label>
-                        <Field id="name" name="name" placeholder="Streamer Name"/>
-                        <ErrorMessage name="name"/>
+                <Form className="submission-form">
+                    <div className="form-field">
+                        <div className="field-title">
+                            <label className="form-label" htmlFor="name">Streamer Name</label>
+                            <ErrorMessage name="name" render={(msg) => <ErrorText message={msg}/>}/>
+                        </div>
+                        <Field className="form-input" id="name" name="name"/>
+
                     </div>
-                    <div>
-                        <label htmlFor="description">Description</label>
-                        <Field as="textarea" id="description" name="description" placeholder="Description"/>
-                        <ErrorMessage name="description"/>
+                    <div className="form-field">
+                        <div className="field-title">
+                            <label className="form-label" htmlFor="description">Description</label>
+                            <ErrorMessage
+                                name="description" render={(msg) => <ErrorText message={msg}/>}/>
+                        </div>
+                        <Field className="form-input form-area" as="textarea" id="description" name="description"
+                        />
+
                     </div>
-                    <div>
-                        <label htmlFor="platform">Platform</label>
-                        <Field as="select" id="platform" name="platform" placeholder="Platform">
+                    <div className="form-field">
+                        <div className="field-title">
+                            <label className="form-label" htmlFor="platform">Platform</label>
+                            <ErrorMessage name="platform" render={(msg) => <ErrorText message={msg}/>}/>
+                        </div>
+                        <Field className="form-select" as="select" id="platform" name="platform">
                             <option value="none">Select platform...</option>
-                            <option value="twitch">Twitch</option>
-                            <option value="youtube">YouTube</option>
-                            <option value="tiktok">TikTok</option>
-                            <option value="kick">Kick</option>
-                            <option value="rumble">Rumble</option>
+                            <option value="Twitch">Twitch</option>
+                            <option value="YouTube">YouTube</option>
+                            <option value="TikTok">TikTok</option>
+                            <option value="Kick">Kick</option>
+                            <option value="Rumble">Rumble</option>
                         </Field>
-                        <ErrorMessage name="platform"/>
+
                     </div>
-                    <button type="submit">Submit</button>
+                    <button className="submit-button" type="submit">Submit</button>
                 </Form>
             </Formik>
         </div>
