@@ -1,0 +1,42 @@
+.streamer-container {
+  margin: 12px auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+  gap: 12px;
+  background-color: #03172d;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgb(255, 255, 255, 0.5);
+}
+
+.back-button {
+  padding: 8px 16px;
+  background-color: #7a39ed;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.back-button:hover {
+  background-color: #5d14e4;
+}
+
+.streamer-details {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.streamer-description {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 24px;
+}
