@@ -4,13 +4,14 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 
 import '../styles/home.css';
+import {url} from "../config";
 
 
 export default function Home() {
     const [streamers, setStreamers] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:3030/streamers')
+        axios.get(`${url}/streamers`)
             .then(res => setStreamers(res.data))
             .catch(err => console.log(err));
     }, []);
