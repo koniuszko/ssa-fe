@@ -7,21 +7,21 @@ import "../styles/streamer.css";
 import {url} from "../config";
 
 export default function Streamer() {
-  const [streamer, setStreamer] = useState({});
+    const [streamer, setStreamer] = useState({});
 
-  const params = useParams();
+    const params = useParams();
 
 
-  useEffect(() => {
-    axios
-        .get(`${url}/streamers/${params.id}`)
-        .then((res) => setStreamer(res.data))
-        .catch((err) => console.log(err));
-  }, []);
+    useEffect(() => {
+        axios
+            .get(`${url}/streamers/${params.id}`)
+            .then((res) => setStreamer(res.data))
+            .catch((err) => console.log(err));
+    }, [params.id]);
 
-  return (
-      <>
-        <StreamerDetails streamer={streamer}/>
-      </>
-  );
+    return (
+        <>
+            <StreamerDetails streamer={streamer}/>
+        </>
+    );
 }
