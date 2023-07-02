@@ -5,9 +5,12 @@ export default function StreamerCard({streamer}) {
     const vote = (voteType) => {
         axios
             .put(`${url}/streamers/${streamer._id}/vote`, {voteType})
-            .then((res) => console.log(res.data))
+            .then((res) => {
+                console.log(res.data);
+                window.location.reload();
+            })
             .catch((err) => console.log(err));
-        window.location.reload();
+
     };
 
     return (
